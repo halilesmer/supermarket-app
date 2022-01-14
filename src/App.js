@@ -19,10 +19,11 @@ useEffect(() => {
   
   function handleProductDelete(id) {
     console.log("Deleting product " + id);
+    const updateCart = cart.filter(product => product.id !== id);
+    setCart(updateCart)
   }
 
   function handleProductAdd(newProduct) {
-    console.log("Adding product " + newProduct.id);
     const existingProduct = cart.find(product => product.id === newProduct.id)
 
     if (existingProduct) {
