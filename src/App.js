@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar.js";
 import Home from "./Components/Home.js";
@@ -10,33 +10,30 @@ import Cart from "./Components/Cart.js";
 function App() {
   const [cart, setCart] = useState([]);
 
-useEffect(() => {
-  // to visualize the cart in the console every time in changes
-  // you can also use React dev tools
-  console.log("cart", cart);
-}, [cart]);
-  
-  
+  //------- delete Products
   function handleProductDelete(id) {
     console.log("Deleting product " + id);
-    const updateCart = cart.filter(product => product.id !== id);
-    setCart(updateCart)
+    const updateCart = cart.filter((product) => product.id !== id);
+    setCart(updateCart);
   }
-
+  //------- add Products
   function handleProductAdd(newProduct) {
-    const existingProduct = cart.find(product => product.id === newProduct.id)
+    const existingProduct = cart.find(
+      (product) => product.id === newProduct.id
+    );
 
     if (existingProduct) {
-      const updateCart = cart.map(product => {
+      const updateCart = cart.map((product) => {
         if (product.id === newProduct.id) {
-          return {...product, quantity: product.quantity +1}
+          return { ...product, quantity: product.quantity + 1 };
         }
         return product;
-      })
-       setCart(updateCart);
+      });
+      setCart(updateCart);
     } else {
-      return setCart([...cart, {...newProduct, quantity: 1}])
+      return setCart([...cart, { ...newProduct, quantity: 1 }]);
     }
+    
   }
 
   return (

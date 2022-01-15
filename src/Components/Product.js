@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import Button from "./Button.js";
 
 export default function Product(props) {
-  const { details } = props;
+  const { details, cart } = props;
+
+ const productFromCart = cart.find((product) => product.id === details.id);
+  const quantity = productFromCart ? productFromCart.quantity : 0;
+   
 
   return (
     <div className="product">
@@ -18,7 +22,7 @@ export default function Product(props) {
           />
         </Link>
         <div className="product-quantity-container">
-          <div className="product-quantity">0</div>
+          <div className="product-quantity">{ quantity}</div>
         </div>
       </div>
       <div className="product-info">
