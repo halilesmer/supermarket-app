@@ -22,7 +22,9 @@ export default function Product(props) {
           />
         </Link>
         <div className="product-quantity-container">
-          <div className="product-quantity">{quantity}</div>
+          {productFromCart && (
+            <div className="product-quantity">{quantity}</div>
+          )}
         </div>
       </div>
       <div className="product-info">
