@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar.js";
 import Home from "./Components/Home.js";
@@ -8,7 +8,21 @@ import ProductDetails from "./Components/ProductDetails.js";
 import Cart from "./Components/Cart.js";
 
 function App() {
-  const [cart, setCart] = useState([]);
+  //--------- saved the card in the local storage --------------started
+  const [cart, setCart] = useState(() => {
+    let savedCart = [];
+    try {
+      savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    } catch (error) {
+      savedCart = [];
+    }
+    return savedCart;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+  //--------- saved the card in the local storage --------------ended
 
   //------- delete Products
   function handleProductDelete(id) {
@@ -33,7 +47,6 @@ function App() {
     } else {
       return setCart([...cart, { ...newProduct, quantity: 1 }]);
     }
-    
   }
 
   return (
