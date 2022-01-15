@@ -22,7 +22,7 @@ export default function Product(props) {
           />
         </Link>
         <div className="product-quantity-container">
-          <div className="product-quantity">{ quantity}</div>
+          <div className="product-quantity">{quantity}</div>
         </div>
       </div>
       <div className="product-info">
@@ -31,13 +31,15 @@ export default function Product(props) {
       </div>
       <div className="product-checkout">
         <div>
-          <Button
-            outline
-            onClick={() => props.onProductDelete(details.id)}
-            className="product-delete"
-          >
-            x
-          </Button>
+          {productFromCart && (
+            <Button
+              outline
+              className="product-delete"
+              onClick={() => props.onProductDelete(details.id)}
+            >
+              x
+            </Button>
+          )}
         </div>
         <Button outline onClick={() => props.onProductAdd(details)}>
           ${details.price}
