@@ -2,9 +2,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 export default function Navbar({ cart }) {
-    const cartCountProduct = cart.map((product) => {
-        return product.quantity;
-    }).reduce((total, product)=> total + product, 0)
+  const cartCount = cart.reduce(
+    (total, product) => total + product.quantity,
+    0
+  );
 
   return (
     <nav className="navbar">
@@ -29,7 +30,7 @@ export default function Navbar({ cart }) {
         </li>
         <li>
           <NavLink to="/cart" className="nav-item nav-cart btn btn-accent">
-            Cart ({cartCountProduct})
+            Cart ({cartCount})
           </NavLink>
         </li>
       </ul>
