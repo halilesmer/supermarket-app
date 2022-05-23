@@ -23,6 +23,7 @@ export default function ProductDetails(props) {
         setProduct(data);
       })
       .catch((error) => console.log("Could not load product details", error));
+         // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,12 +1,16 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import Input from "./input";
 import Button from "./Button";
+import { AppContext } from "./AppContext.js";
 
-export default function Cart({ cart }) {
+export default function Cart() {
   const [emailInp, setEmailInp] = useState("");
-
-  const totalPrice = cart.reduce(
+const app = useContext(AppContext);
+  const cart = app.cart;
+  console.log('app.cart: ', app);
+  
+  const getTotalPrice = cart.reduce(
     (total, product) => total + product.price * product.quantity,
     0
   );
@@ -20,7 +24,6 @@ export default function Cart({ cart }) {
 
     let priceId;
     cart.forEach((product) => (priceId = product));
-    console.log("cart", priceId.price_id);
 
     stripeLoadedPromise.then((stripe) => {
       stripe
@@ -57,10 +60,10 @@ export default function Cart({ cart }) {
             <p>You have not added any product to your cart yet.</p>
           )}
           {cart.length > 0 && (
-            <table class="table table-cart">
+            <table className="table table-cart">
               <thead>
                 <tr>
-                  <th width="25%" class="th-product">
+                  <th width="25%" className="th-product">
                     Product
                   </th>
                   <th width="20%">Unit price</th>
@@ -72,7 +75,7 @@ export default function Cart({ cart }) {
                 {cart.map((product) => {
                   //console.log('details',product)
                   return (
-                    <tr>
+                    <tr key={product.id}>
                       <td>
                         <img
                           src={product.image}
@@ -94,14 +97,14 @@ export default function Cart({ cart }) {
               <tfoot>
                 <tr>
                   <th colSpan="2"></th>
-                  <th class="cart-highlight">Total</th>
-                  <th class="cart-highlight">{totalPrice} €</th>
+                  <th className="cart-highlight">Total</th>
+                  <th className="cart-highlight">{getTotalPrice} €</th>
                 </tr>
               </tfoot>
             </table>
           )}
           {cart.length > 0 && (
-            <form class="pay-form" onSubmit={handleSubmit}>
+            <form className="pay-form" onSubmit={handleSubmit}>
               <p>
                 Enter your email and then click on pay and your products will be
                 delivered to you on the same day!
@@ -110,7 +113,7 @@ export default function Cart({ cart }) {
                 value={emailInp}
                 onChange={(e) => setEmailInp(e.target.value)}
                 required
-                autocomplete="email"
+                autoComplete="email"
                 placeholder="Email"
                 type="email"
               />

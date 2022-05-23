@@ -15,7 +15,7 @@ export default function Products(props) {
           setProducts(data);
       })
         .catch((error) => console.log("Could not load products", error))
-     
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
